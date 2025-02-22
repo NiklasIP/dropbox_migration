@@ -1,5 +1,5 @@
 .venv
-settings.json
+defaults.json
 *.xlsx
 *.txt
 .idea
