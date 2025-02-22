@@ -18,12 +18,20 @@ class GUI(QDialog):
         title = "Bat Migration"
         self.setWindowTitle(title)
 
-        app_info = json.loads(open("./defaults.json").read())
+        try:
+            app_info = json.loads(open("./defaults.json").read())
 
-        self.document_to_read = app_info["document"]
-        self.year = app_info["year"]
-        self.locale = str(app_info["station"]).title()
-        self.nights = app_info["selectedNights"]
+        except:
+            self.document_to_read = ''
+            self.year = ''
+            self.locale = ''
+            self.nights = ['Söndag']
+
+        else:
+            self.document_to_read = app_info["document"]
+            self.year = app_info["year"]
+            self.locale = str(app_info["station"]).title()
+            self.nights = app_info["selectedNights"]
 
         self.filesDocument.setPlainText(self.document_to_read)
         self.stationBox.setPlainText(self.locale)
@@ -124,7 +132,7 @@ class GUI(QDialog):
 
     def write_new_defaults(self):
         self.year = self.yearBox.toPlainText()
-        self.locale = self.stationBox.toPlainText()
+        self.locale = self.stationBox.toPlainText().title()
         self.document_to_read = self.filesDocument.toPlainText()
 
         new_defaults = {"document": self.document_to_read,
