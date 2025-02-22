@@ -4,12 +4,10 @@ from time import sleep
 
 import dropbox
 import pandas as pd
-#from PyQt5.QtNfc import title
 from PyQt5.QtWidgets import QDialog, QMessageBox, QApplication, QFileDialog, QButtonGroup
 from PyQt5 import uic
 from PyQt5.QtCore import QThread, pyqtSignal
 from dropbox.files import download
-
 
 class GUI(QDialog):
     def __init__(self):
@@ -33,7 +31,6 @@ class GUI(QDialog):
 
         self.fileSelectButton.clicked.connect(self.set_download_folder)
         self.migrateButton.clicked.connect(self.download_files)
-
 
 
     def set_download_folder(self) -> None:
@@ -94,6 +91,7 @@ class GUI(QDialog):
 
         return relocation_paths_chunks
 
+
     def copy_files(self, relocation_paths, refresh_rate:int=2):
         if len(relocation_paths) == 0:
             message = "Nothing to move"
@@ -114,7 +112,6 @@ class GUI(QDialog):
             while True:
                 status = dbx.files_copy_batch_check_v2(job_id)
                 if status.is_complete():
-                    # noinspection PyTypeChecker
                     report = status.get_complete()
                     results.append(report)
                     break
@@ -123,6 +120,7 @@ class GUI(QDialog):
                 sleep(refresh_rate) #Default 2 sec.
 
         return results
+
 
     def write_new_defaults(self):
         self.year = self.yearBox.toPlainText()
@@ -137,6 +135,7 @@ class GUI(QDialog):
         with open("defaults.json", mode="w") as out_file:
             json.dump(new_defaults, out_file,indent=6)
 
+
     def download_files(self):
         self.write_new_defaults()
 
@@ -147,18 +146,10 @@ class GUI(QDialog):
         self.copy_files(relocation_paths=relocation_paths)
 
 
-
-
 def main():
     app = QApplication([])
     window = GUI()
     app.exec_()
-
-
-    # relocation_paths = create_relocation_object()
-    # results = copy_files(relocation_paths=relocation_paths)
-    #
-    # print(results)
 
 if __name__ == "__main__":
     main()
