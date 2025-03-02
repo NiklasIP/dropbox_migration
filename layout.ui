@@ -131,6 +131,19 @@
     <string>Select File</string>
    </property>
   </widget>
+  <widget class="QLabel" name="curr_status">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>250</y>
+     <width>501</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
